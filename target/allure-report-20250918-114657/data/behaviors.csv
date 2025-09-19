@@ -1,0 +1,5 @@
+"BROKEN","EPIC","FAILED","FEATURE","PASSED","SKIPPED","STORY","UNKNOWN"
+"0","","0","User Authentication test","1","0","@US0103-01_User Logout and return login page","0"
+"0","","0","User Authentication test","1","0","@US0101-01_Login success","0"
+"0","","0","User Authentication test","1","0","@US0102-01_Login failed","0"
+"0","","0","User Authentication test","1","0","@US0102-02_Login failed","0"

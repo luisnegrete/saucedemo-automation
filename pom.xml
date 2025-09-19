@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.saucedemo.test</groupId>
+  <artifactId>saucedemo-automation</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>saucedemo-automation</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <!-- Playwright for Java -->
+    <dependency>
+        <groupId>com.microsoft.playwright</groupId>
+        <artifactId>playwright</artifactId>
+        <version>1.48.0</version>
+    </dependency>
+    <!-- Cucumber for Java -->
+    <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-java</artifactId>
+        <version>7.20.1</version>
+    </dependency>
+    <!-- Cucumber JUnit -->
+    <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-junit</artifactId>
+        <version>7.20.1</version>
+        <scope>test</scope>
+    </dependency>
+    <!-- Assertions -->
+    <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>3.26.3</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-cucumber7-jvm -->
+    <dependency>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-cucumber7-jvm</artifactId>
+        <version>2.30.0</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+<build>
+    <plugins>
+        <!-- Surefire plugin para ejecutar tests -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.2.5</version>
+            <configuration>
+                <includes>
+                    <include>**/RunCucumberTest.java</include>
+                </includes>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-maven</artifactId>
+            <version>2.12.0</version>
+        </plugin>
+    </plugins>
+</build>
+</project>

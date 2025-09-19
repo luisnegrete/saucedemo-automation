@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","3802","@US0101-01_Login success","","2025-09-18","passed","2025-09-18","","User Authentication test","@US0101-01_Login success",""
+"","2668","@US0103-01_User Logout and return login page","","2025-09-18","passed","2025-09-18","","User Authentication test","@US0103-01_User Logout and return login page",""
+"","1682","@US0102-01_Login failed","","2025-09-18","passed","2025-09-18","","User Authentication test","@US0102-01_Login failed",""
+"","1501","@US0102-02_Login failed","","2025-09-18","passed","2025-09-18","","User Authentication test","@US0102-02_Login failed",""
