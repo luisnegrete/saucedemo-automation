@@ -10,3 +10,4 @@ allure-results/
 .settings/
 *.jar
 *.war
+target/saucedemo-automation-1.0-SNAPSHOT.jar

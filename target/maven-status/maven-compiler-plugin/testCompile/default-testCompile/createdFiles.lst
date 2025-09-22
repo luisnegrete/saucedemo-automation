@@ -1,6 +1,0 @@
-com/saucedemo/steps/LoginSteps.class
-com/saucedemo/hooks/PlaywrightHooks.class
-com/saucedemo/pages/InventoryPage.class
-com/saucedemo/steps/InventorySteps.class
-com/saucedemo/runners/RunCucumberTest.class
-com/saucedemo/pages/LoginPage.class
