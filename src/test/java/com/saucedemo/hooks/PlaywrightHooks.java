@@ -8,46 +8,47 @@ import io.cucumber.java.Before;
 import io.qameta.allure.Allure;
 
 public class PlaywrightHooks {
-    private static Playwright playwright;
-    private static Browser browser;
-    private static BrowserContext context;
-    private static Page page;
+    private static final ThreadLocal<Playwright> playwright = new ThreadLocal<>();
+    private static final ThreadLocal<Browser> browser = new ThreadLocal<>();
+    private static final ThreadLocal<BrowserContext> context = new ThreadLocal<>();
+    private static final ThreadLocal<Page> page = new ThreadLocal<>();
 
     @Before
-    public static void scenarioSetUp() {
-        // Inicializar Playwright y abrir navegador solo una veza
-        playwright = Playwright.create();
-        browser = playwright.chromium().launch(new BrowserType.LaunchOptions()
-                .setHeadless(true)
-                .setSlowMo(100));
+    public void scenarioSetUp() {
+        playwright.set(Playwright.create());
+        browser.set(playwright.get().chromium().launch(new BrowserType.LaunchOptions()
+                .setHeadless(false)
+                .setSlowMo(100)));
+        
+        context.set(browser.get().newContext());
+        page.set(context.get().newPage());
 
-        // Crear un contexto y página nuevos por escenario
-        context = browser.newContext();
-        page = context.newPage();
-
-        page.navigate("https://www.saucedemo.com/");
+        page.get().navigate("https://www.saucedemo.com/");
     }
 
     @After
     public void tearDownScenario(io.cucumber.java.Scenario scenario) {
-        if (scenario.isFailed() && page != null) {
-            byte[] screenshot = page.screenshot(new Page.ScreenshotOptions().setFullPage(true));
+        if (scenario.isFailed() && page.get() != null) {
+            byte[] screenshot = page.get().screenshot(new Page.ScreenshotOptions().setFullPage(true));
             Allure.addAttachment("Screenshot on Failure", new ByteArrayInputStream(screenshot));
         }
-        if (context != null) {
-            context.close();
+        if (context.get() != null) {
+            context.get().close();
+            context.remove();
         }
-
-        if (browser != null) {
-            browser.close();
+        if (browser.get() != null) {
+            browser.get().close();
+            browser.remove();
         }
-        if (playwright != null) {
-            playwright.close();
+        if (playwright.get() != null) {
+            playwright.get().close();
+            playwright.remove();
         }
+        page.remove();
     }
 
     // :apuntando_hacia_la_derecha: Getter para usar la Page en Steps
     public static Page getPage() {
-        return page;
+        return page.get();
     }
 }
