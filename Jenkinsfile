@@ -7,7 +7,7 @@ pipeline {
     string(name: 'BRANCH', defaultValue: 'main', description: 'Git branch to build')
   }
   tools {
-    jdk 'jdk17'     // nombre tal como lo registraste en Global Tool Config
+    jdk 'jdk8'      // Match project's Java 8 requirement from pom.xml
     maven 'maven3'  // nombre tal como lo registraste
   }
   environment {
@@ -34,10 +34,15 @@ pipeline {
       steps {
         script {
           // construye comando maven dinámicamente
-          def mvnCmd = "${MVN} test -Dthreads=${params.THREADS} -B -DskipTests=false"
+          def mvnCmd = "${MVN} test -B -DskipTests=false"
+          // Add proper parallel execution for Cucumber
+          if (params.THREADS?.trim()) {
+            mvnCmd += " -Dcucumber.execution.parallel.enabled=true -Dcucumber.execution.parallel.config.strategy=fixed -Dcucumber.execution.parallel.config.fixed.parallelism=${params.THREADS}"
+          }
           if (params.TAGS?.trim()) {
-            // pasa el tag a cucumber
-            mvnCmd += " -Dcucumber.filter.tags=\"${params.TAGS}\""
+            // Sanitize tags input and wrap in single quotes
+            def sanitizedTags = params.TAGS.replaceAll(/[^a-zA-Z0-9@^,\s-]/, '')
+            mvnCmd += " -Dcucumber.filter.tags='${sanitizedTags}'"
           }
           echo "Running tests: ${mvnCmd}"
           sh mvnCmd
@@ -46,19 +51,45 @@ pipeline {
     }
     stage('Allure report') {
       steps {
-        // usa plugin de Allure de Jenkins
-        allure includeProperties: false, jdk: '', results: [[path: "target/allure-results"]]
+        script {
+          // Generate Allure history for trends
+          sh "${MVN} allure:report"
+          allure includeProperties: false, 
+                 jdk: '', 
+                 results: [[path: "target/allure-results"]],
+                 reportBuildPolicy: 'ALWAYS',
+                 properties: []
+        }
+      }
+    }
+    stage('Rerun Failures') {
+      when {
+        expression {
+          fileExists('target/rerun.txt') && readFile('target/rerun.txt').trim()
+        }
+      }
+      steps {
+        sh "${MVN} test -Dtest=RunFailedTests -Dcucumber.features=@target/rerun.txt"
       }
     }
   }
   post {
     always {
       archiveArtifacts artifacts: 'target/allure-results/**', allowEmptyArchive: true
-      junit 'target/surefire-reports/*.xml' // si generas surefire reports
-      echo "Build finished. See console log and Allure report."
+      junit 'target/surefire-reports/*.xml'
+      cucumber buildStatus: 'UNSTABLE',
+        fileExcludePattern: '',
+        fileIncludePattern: '**/*.json',
+        trendsLimit: 10
     }
     failure {
-      mail to: 'tu-email@example.com', subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}", body: "See ${env.BUILD_URL}"
+      script {
+        // Use Jenkins credentials for email instead of hardcoding
+        emailext body: "See ${env.BUILD_URL}",
+          recipientProviders: [[$class: 'DevelopersRecipientProvider']],
+          subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+          to: '${DEFAULT_RECIPIENTS}' // Configure in Jenkins credentials
+      }
     }
   }
 }
