@@ -54,11 +54,12 @@ pipeline {
         script {
           // Generate Allure history for trends
           sh "${MVN} allure:report"
-          allure includeProperties: false, 
-                 jdk: '', 
-                 results: [[path: "target/allure-results"]],
-                 reportBuildPolicy: 'ALWAYS',
-                 properties: []
+          allure commandline: 'allure-2.30.0',
+            includeProperties: false, 
+            jdk: '', 
+            results: [[path: "target/allure-results"]],
+            reportBuildPolicy: 'ALWAYS',
+            properties: []
         }
       }
     }
