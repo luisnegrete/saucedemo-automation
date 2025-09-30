@@ -17,9 +17,9 @@ public class PlaywrightHooks {
     public void scenarioSetUp() {
         playwright.set(Playwright.create());
         browser.set(playwright.get().chromium().launch(new BrowserType.LaunchOptions()
-                .setHeadless(false)
+                .setHeadless(true)
                 .setSlowMo(100)));
-        
+
         context.set(browser.get().newContext());
         page.set(context.get().newPage());
 

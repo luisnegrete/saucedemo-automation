@@ -7,7 +7,7 @@ pipeline {
     string(name: 'BRANCH', defaultValue: 'main', description: 'Git branch to build')
   }
   tools {
-    jdk 'jdk8'      // Match project's Java 8 requirement from pom.xml
+    jdk 'jdk17'     // Updated to match Java 17 requirement from pom.xml
     maven 'maven3'  // nombre tal como lo registraste
   }
   environment {

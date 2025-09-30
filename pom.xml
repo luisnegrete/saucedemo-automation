@@ -3,6 +3,8 @@
   <modelVersion>4.0.0</modelVersion>
   <properties>
     <cucumber.features>src/test/resources/features</cucumber.features>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
   </properties>
   <groupId>com.saucedemo.test</groupId>
   <artifactId>saucedemo-automation</artifactId>
