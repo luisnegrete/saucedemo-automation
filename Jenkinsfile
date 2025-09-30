@@ -67,17 +67,17 @@ pipeline {
         }
       }
     }
-  //  stage('Rerun Failures') {
-  //    when {
-  //      expression {
-  //        fileExists('target/rerun.txt') && readFile('target/rerun.txt').trim()
-  //      }
-  //    }
-  //    steps {
-  //      sh "${MVN} test -Dtest=RunFailedTests -Dcucumber.features=@target/rerun.txt"
-  //    }
-  //  }
-  //}
+    /* stage('Rerun Failures') {
+      when {
+        expression {
+          fileExists('target/rerun.txt') && readFile('target/rerun.txt').trim()
+        }
+      }
+      steps {
+        sh "${MVN} test -Dtest=RunFailedTests -Dcucumber.features=@target/rerun.txt"
+      }
+    } */
+  }
   post {
     always {
       archiveArtifacts artifacts: 'target/allure-results/**', allowEmptyArchive: true
