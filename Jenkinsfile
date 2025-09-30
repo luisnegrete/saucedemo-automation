@@ -9,7 +9,7 @@ pipeline {
   tools {
     jdk 'jdk17'     // Updated to match Java 17 requirement from pom.xml
     maven 'maven3'  // nombre tal como lo registraste
-    allure 'allure-2.30.0' // Add to tools section
+    allure 'allure-2.35.1' // Updated to Allure 2.35.1
   }
   environment {
     MVN = "${tool 'maven3'}/bin/mvn"
@@ -55,7 +55,7 @@ pipeline {
         script {
           // Generate Allure history for trends
           sh "${MVN} allure:report"
-          allure commandline: 'allure-2.30.0',
+          allure commandline: 'allure-2.35.1',
             includeProperties: false, 
             jdk: '', 
             results: [[path: "target/allure-results"]],
