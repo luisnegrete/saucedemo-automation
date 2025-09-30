@@ -82,7 +82,6 @@ pipeline {
     always {
       archiveArtifacts artifacts: 'target/allure-results/**', allowEmptyArchive: true
       junit 'target/surefire-reports/*.xml'
-      cleanWs() // Clean workspace after build
     junit 'target/surefire-reports/*.xml'
     }
     failure {
