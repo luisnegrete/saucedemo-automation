@@ -9,6 +9,7 @@ pipeline {
   tools {
     jdk 'jdk17'     // Updated to match Java 17 requirement from pom.xml
     maven 'maven3'  // nombre tal como lo registraste
+    allure 'allure-2.30.0' // Add to tools section
   }
   environment {
     MVN = "${tool 'maven3'}/bin/mvn"
@@ -59,7 +60,10 @@ pipeline {
             jdk: '', 
             results: [[path: "target/allure-results"]],
             reportBuildPolicy: 'ALWAYS',
-            properties: []
+            properties: [
+              [key: 'allure.report.remove.attachments', value: 'true'], // Remove old attachments
+              [key: 'allure.issues.tracker.pattern', value: ''] // Disable issue links
+            ]
         }
       }
     }
@@ -78,6 +82,7 @@ pipeline {
     always {
       archiveArtifacts artifacts: 'target/allure-results/**', allowEmptyArchive: true
       junit 'target/surefire-reports/*.xml'
+      cleanWs() // Clean workspace after build
       cucumber buildStatus: 'UNSTABLE',
         fileExcludePattern: '',
         fileIncludePattern: '**/*.json',
