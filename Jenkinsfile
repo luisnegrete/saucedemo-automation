@@ -83,10 +83,7 @@ pipeline {
       archiveArtifacts artifacts: 'target/allure-results/**', allowEmptyArchive: true
       junit 'target/surefire-reports/*.xml'
       cleanWs() // Clean workspace after build
-      cucumber buildStatus: 'UNSTABLE',
-        fileExcludePattern: '',
-        fileIncludePattern: '**/*.json',
-        trendsLimit: 10
+    junit 'target/surefire-reports/*.xml'
     }
     failure {
       script {

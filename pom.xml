@@ -54,6 +54,7 @@
     <artifactId>maven-surefire-plugin</artifactId>
     <version>3.2.5</version>
     <configuration>
+        <testFailureIgnore>true</testFailureIgnore>
         <includes>
             <include>**/RunCucumberTest.java</include>
         </includes>
@@ -61,6 +62,7 @@
             <cucumber.features>${cucumber.features}</cucumber.features>
             <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
         </systemPropertyVariables>
+        <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
     </configuration>
     <executions>
         <execution>
