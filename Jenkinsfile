@@ -81,8 +81,8 @@ pipeline {
   post {
     always {
       archiveArtifacts artifacts: 'target/allure-results/**', allowEmptyArchive: true
-      junit 'target/surefire-reports/*.xml'
-    junit 'target/surefire-reports/*.xml'
+      junit 'target/surefire-reports/**/*.xml'
+      cleanWs() // Clean workspace after build
     }
     failure {
       script {
