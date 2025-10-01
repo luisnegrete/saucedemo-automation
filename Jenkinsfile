@@ -95,7 +95,7 @@ pipeline {
   post {
     always {
       archiveArtifacts artifacts: 'target/allure-results/**', allowEmptyArchive: true
-      junit 'target/surefire-reports/*.xml'
+      junit skipPublishingChecks: true, testResults: 'target/surefire-reports/*.xml' // Suprime el warning de Checks API
       cleanWs() // Clean workspace after build
     }
     failure {
