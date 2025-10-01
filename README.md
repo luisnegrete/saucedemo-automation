@@ -28,16 +28,16 @@ El objetivo es implementar buenas prácticas de automatización y cubrir escenar
 saucedemo-automation/\
 │── src/\
 │ ├── test/java/com/saucedemo/\
-│ │ ├── hooks/ # Configuración global (Playwright + Allure)\
-│ │ ├── pages/ # Page Objects + Page Factory\
-│ │ ├── runners/ # Clases Runner de Cucumber\
-│ │ ├── steps/ # Glue code\
-│ │ ├── utils/ # Utilidades y helpers\
-│ ├── test/features/\
-│ │ ├──features/ # Escenarios en Gherkin\
+│ │ ├── hooks/ # Configuración de Allure y hooks de test\
+│ │ ├── pages/ # Implementaciones específicas de Page Objects\
+│ │ ├── runners/ # Ejecutores de Cucumber\
+│ │ ├── steps/ # Definiciones de pasos en inglés\
+│ ├── test/resources/\
+│ │ └── features/ # Escenarios Gherkin (.feature)\
 │\
-│── pom.xml # Dependencias y plugins Maven\
-│── README.md # Este archivo\
+│── Jenkinsfile # Configuración de pipeline CI/CD\
+│── pom.xml # Gestión de dependencias Maven\
+│── README.md # Documentación del proyecto\
 
 ---
 
