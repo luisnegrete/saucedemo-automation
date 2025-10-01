@@ -50,6 +50,30 @@ pipeline {
         }
       }
     }
+    stage('Rerun Failed Tests') {
+      when {
+        expression { fileExists('target/rerun.txt') }
+      }
+      steps {
+        script {
+          echo "Re-running failed tests from rerun.txt"
+          def rerunCmd = "${MVN} test -B -Dtest=com.saucedemo.runners.RunFailedTests"
+          
+          if (params.THREADS?.trim()) {
+            rerunCmd += " -Dcucumber.execution.parallel.enabled=true -Dcucumber.execution.parallel.config.strategy=fixed -Dcucumber.execution.parallel.config.fixed.parallelism=${params.THREADS}"
+          }
+          
+          if (params.TAGS?.trim()) {
+            def sanitizedTags = params.TAGS.replaceAll(/[^a-zA-Z0-9@^,\s-]/, '')
+            rerunCmd += " -Dcucumber.filter.tags='${sanitizedTags}'"
+          }
+          
+          echo "Rerunning tests with same parameters: ${rerunCmd}"
+          sh rerunCmd
+        }
+      }
+    }
+    
     stage('Allure report') {
       steps {
         script {
@@ -71,7 +95,7 @@ pipeline {
   post {
     always {
       archiveArtifacts artifacts: 'target/allure-results/**', allowEmptyArchive: true
-      junit 'target/surefire-reports/**/*.xml'
+      junit 'target/surefire-reports/*.xml'
       cleanWs() // Clean workspace after build
     }
     failure {

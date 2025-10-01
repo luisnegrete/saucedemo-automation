@@ -10,8 +10,8 @@ import io.cucumber.junit.CucumberOptions;
     glue = {"com.saucedemo.steps", "com.saucedemo.hooks"},
     plugin = {
         "pretty",
-        "html:target/rerun-reports/cucumber.html",
-        "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+        "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
+        "timeline:target/cucumber-parallel-report"
     },
     monochrome = true
 )
