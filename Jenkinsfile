@@ -57,7 +57,19 @@ pipeline {
       steps {
         script {
           echo "Re-running failed tests from rerun.txt"
-          sh "${MVN} test -B -Dtest=com.saucedemo.runners.RunFailedTests"
+          def rerunCmd = "${MVN} test -B -Dtest=com.saucedemo.runners.RunFailedTests"
+          
+          if (params.THREADS?.trim()) {
+            rerunCmd += " -Dcucumber.execution.parallel.enabled=true -Dcucumber.execution.parallel.config.strategy=fixed -Dcucumber.execution.parallel.config.fixed.parallelism=${params.THREADS}"
+          }
+          
+          if (params.TAGS?.trim()) {
+            def sanitizedTags = params.TAGS.replaceAll(/[^a-zA-Z0-9@^,\s-]/, '')
+            rerunCmd += " -Dcucumber.filter.tags='${sanitizedTags}'"
+          }
+          
+          echo "Rerunning tests with same parameters: ${rerunCmd}"
+          sh rerunCmd
         }
       }
     }
