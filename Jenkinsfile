@@ -50,6 +50,18 @@ pipeline {
         }
       }
     }
+    stage('Rerun Failed Tests') {
+      when {
+        expression { fileExists('target/rerun.txt') }
+      }
+      steps {
+        script {
+          echo "Re-running failed tests from rerun.txt"
+          sh "${MVN} test -B -Dtest=com.saucedemo.runners.RunFailedTests"
+        }
+      }
+    }
+    
     stage('Allure report') {
       steps {
         script {
