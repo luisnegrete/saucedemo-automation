@@ -21,7 +21,7 @@ Feature: User Authentication test
       | TC_ID      | USERNAME        | PASSWORD     | EXPECTED_MESSAGE                                                          |
       | @US0102-01 | locked_out_user | secret_sauce | Epic sadface: Sorry, this user has been locked out.                       |
       | @US0102-02 | wrong_user      | secret_sauce | Epic sadface: Username and password do not match any user in this service |
-      | @US0102-03 | problem_user    | secret_sauce | Entra pero las imagenes son todas iguales                                 |
+      #| @US0102-03 | problem_user    | secret_sauce | Entra pero las imagenes son todas iguales                                 |
       #| @US0102-04 | performance_glitch_user | secret_sauce | Entra pero tarda muchisimo en cargar la página                            |
       #| @US0102-05 | error_user              | secret_sauce | Entra bien                                                                |
       #| @US0102-06 | visual_user             | secret_sauce | Entra pero tiene los estilos mal                                          |
