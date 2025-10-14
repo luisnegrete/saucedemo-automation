@@ -29,8 +29,8 @@ pipeline {
         sh "${MVN} clean install -DskipTests -B"
         // Instalar navegadores de Playwright
         sh "${MVN} -e exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args=\"install\""
-        // Instalar dependencias del sistema requeridas
-        sh "${MVN} -e exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args=\"install-deps\""
+        // Instalar dependencias del sistema sin requerir sudo
+        sh "docker run --rm -v ${WORKSPACE}:/app -w /app maven:3.8.6-eclipse-temurin-17 ${MVN} -e exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args=\"install-deps --dry-run\" | grep 'apt-get install' | sed 's/sudo //' | xargs -r apt-get install -y"
       }
     }
     stage('Run tests') {
