@@ -28,7 +28,7 @@ pipeline {
         echo "Installing Maven dependencies (skip tests) and Playwright browsers..."
         sh "${MVN} clean install -DskipTests -B"
         // comando para instalar navegadores de Playwright Java
-        sh "${MVN} -e exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args=\"install\""
+        sh "${MVN} -e exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args=\"install\" --with-deps"
       }
     }
     stage('Run tests') {
