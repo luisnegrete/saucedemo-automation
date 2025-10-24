@@ -1,4 +1,4 @@
-package com.saucedemo.steps;
+package com.saucedemo.steps.ui;
 
 import static org.junit.Assert.assertTrue;
 
