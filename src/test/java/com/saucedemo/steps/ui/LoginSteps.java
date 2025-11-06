@@ -8,39 +8,39 @@ import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 
 import com.saucedemo.pages.LoginPage;
-import com.saucedemo.hooks.PlaywrightHooks;
+import com.saucedemo.utils.TestContext;
 
 public class LoginSteps {
-    private LoginPage loginPage;
+    private final TestContext testContext;
+    private final LoginPage loginPage;
 
+    public LoginSteps(TestContext context) {
+        testContext = context;
+        this.loginPage = new LoginPage(testContext.getPage());
+    }
 
     @Given("User is on login page")
     public void loadLoginPage() {
         // Ya se abre automáticamente en el Hook con la URL base
-        this.loginPage = new LoginPage(PlaywrightHooks.getPage());
     }
 
     @Given("User is logged in with {string}, {string} credentials")
     public void logginAsCredentials(String username, String password) {
-        this.loginPage = new LoginPage(PlaywrightHooks.getPage());
         this.loginPage.login(username, password);
     }
 
     @When("User enter the username as {string}")
     public void fillUserName(String username) {
-        this.loginPage = new LoginPage(PlaywrightHooks.getPage());
         this.loginPage.fillUserName(username);
     }
 
     @When("User enter the password as {string}")
     public void fillPassword(String password) {
-        this.loginPage = new LoginPage(PlaywrightHooks.getPage());
         this.loginPage.fillPassword(password);
     }
     
     @When("User click on the login button")
     public void clickLoginButton() {
-        this.loginPage = new LoginPage(PlaywrightHooks.getPage());
         this.loginPage.clickLoginButton();
     }
 

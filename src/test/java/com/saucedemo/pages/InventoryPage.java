@@ -1,28 +1,28 @@
 package com.saucedemo.pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-public class InventoryPage {
-    private Page page;
+public class InventoryPage extends BasePage{
     
     // Locators con data-test (más estables que xpath)
-    private final String header = "[data-test='header-container']";
-    private final String sideMenu = ".bm-burger-button";
-    private final String logoutOption = "[data-test='logout-sidebar-link']";
-    
+    private final Locator header = page.locator("[data-test='header-container']");
+    private final Locator sideMenu = page.locator(".bm-burger-button");
+    private final Locator logoutOption = page.locator("[data-test='logout-sidebar-link']");
+
     public InventoryPage(Page page) {
-        this.page = page;
+        super(page);
     }
     
     public boolean validateHeader(){
-        return page.isVisible(header);
+        return header.isVisible();
     }
 
     public void clickSideMenu(){
-        page.click(sideMenu);
+        sideMenu.click();
     }
 
     public void clickLogoutButton(){
-        page.click(logoutOption);
+        logoutOption.click();
     }
 }

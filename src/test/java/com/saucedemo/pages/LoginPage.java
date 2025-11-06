@@ -1,48 +1,47 @@
 package com.saucedemo.pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-public class LoginPage {
-
-    private Page page;
+public class LoginPage extends BasePage {
     
     // Locators con data-test (más estables que xpath)
-    private final String usernameInput = "[data-test='username']";
-    private final String passwordInput = "[data-test='password']";
-    private final String loginButton = "[data-test='login-button']";
-    private final String errorMessage = "[data-test='error']";
-    
+    private final Locator usernameInput = page.locator("[data-test='username']");
+    private final Locator passwordInput = page.locator("[data-test='password']");
+    private final Locator loginButton = page.locator("[data-test='login-button']");
+    private final Locator errorMessage = page.locator("[data-test='error']");
+
     public LoginPage(Page page) {
-        this.page = page;
+        super(page);
     }
     
     public void login(String username, String password) {
-        page.fill(usernameInput, username);
-        page.fill(passwordInput, password);
-        page.click(loginButton);
+        usernameInput.fill(username);
+        passwordInput.fill(password);
+        loginButton.click();
     }
 
     public void fillUserName(String username) {
-        page.fill(usernameInput, username);
+        usernameInput.fill(username);
     }
 
     public void fillPassword(String password) {
-        page.fill(passwordInput, password);
+        passwordInput.fill(password);
     }
 
     public void clickLoginButton(){
-        page.click(loginButton);
+        loginButton.click();
     }
 
     public boolean validateErrorMessage(){
-        return page.isVisible(errorMessage);
+        return errorMessage.isVisible();
     }
 
     public String getErrorMessage(){
-        return page.locator(errorMessage).innerText();
+        return errorMessage.innerText();
     }
 
     public boolean validateLoginPage(){
-        return page.isVisible(usernameInput);
+        return usernameInput.isVisible() && passwordInput.isVisible() && loginButton.isVisible();
     }
 }
