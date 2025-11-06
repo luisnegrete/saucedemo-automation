@@ -38,6 +38,27 @@
         <artifactId>assertj-core</artifactId>
         <version>3.26.3</version>
     </dependency>
+    
+    <!-- RestAssured for API Testing -->
+    <dependency>
+        <groupId>io.rest-assured</groupId>
+        <artifactId>rest-assured</artifactId>
+        <version>5.4.0</version>
+        <scope>test</scope>
+    </dependency>
+    
+    <!-- Jackson for JSON serialization -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.17.1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.32</version>
+        <scope>compile</scope>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-cucumber7-jvm -->
     <dependency>
         <groupId>io.qameta.allure</groupId>
@@ -45,9 +66,30 @@
         <version>2.30.0</version>
         <scope>test</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer -->
+    <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-picocontainer</artifactId>
+        <version>7.20.1</version>
+    </dependency>
 </dependencies>
 <build>
     <plugins>
+        <!-- Lombok Annotation Processing -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.13.0</version>
+            <configuration>
+                <annotationProcessorPaths>
+                    <path>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                        <version>1.18.32</version>
+                    </path>
+                </annotationProcessorPaths>
+            </configuration>
+        </plugin>
         <!-- Surefire plugin para ejecutar tests -->
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
