@@ -3,8 +3,6 @@ package com.saucedemo.steps.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.slf4j.Logger;
-
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.qameta.allure.Allure;
@@ -13,14 +11,12 @@ import io.cucumber.java.en.Then;
 import com.saucedemo.pages.LoginPage;
 import com.saucedemo.utils.TestContext;
 
-public class LoginSteps {
-    private final TestContext testContext;
+public class LoginSteps extends BaseUISteps {
     private final LoginPage loginPage;
-    private static final Logger logger = org.slf4j.LoggerFactory.getLogger(LoginSteps.class);
-
+    
     public LoginSteps(TestContext context) {
-        testContext = context;
-        this.loginPage = new LoginPage(testContext.getPage());
+        super(context);
+        loginPage = new LoginPage(page);
     }
 
     @Given("User is on login page")
@@ -35,7 +31,7 @@ public class LoginSteps {
         logger.info("Logging in with username: {} and password: {}", username, password);
         Allure.step("Logged in with " + username + " and " + password + " credentials");
 
-        this.loginPage.login(username, password);
+        loginPage.login(username, password);
     }
 
     @When("User enter the username as {string}")
@@ -43,7 +39,7 @@ public class LoginSteps {
         logger.info("Filling username field with: {}", username);
         Allure.step("Entered username: " + username);
 
-        this.loginPage.fillUserName(username);
+        loginPage.fillUserName(username);
     }
 
     @When("User enter the password as {string}")
@@ -51,7 +47,7 @@ public class LoginSteps {
         logger.info("Filling password field with: {}", password);
         Allure.step("Entered password: " + password);
 
-        this.loginPage.fillPassword(password);
+        loginPage.fillPassword(password);
     }
 
     @When("User click on the login button")
@@ -59,7 +55,7 @@ public class LoginSteps {
         logger.info("Clicking on the login button");
         Allure.step("Clicked on the login button");
 
-        this.loginPage.clickLoginButton();
+        loginPage.clickLoginButton();
     }
 
     @Then("User should see error message as {string}")
@@ -67,9 +63,9 @@ public class LoginSteps {
         logger.info("Validating login error message");
         Allure.step("Validated error message: " + errorMessage);
 
-        boolean isVisible = this.loginPage.validateErrorMessage();
+        boolean isVisible = loginPage.validateErrorMessage();
         assertTrue("The Error Message is not displayed correctly", isVisible);
-        assertEquals(errorMessage, this.loginPage.getErrorMessage());
+        assertEquals(errorMessage, loginPage.getErrorMessage());
     }
 
     @Then("User should see Login page")
@@ -77,7 +73,7 @@ public class LoginSteps {
         logger.info("Validating login page");
         Allure.step("Validated Login page is displayed correctly");
 
-        boolean isVisible = this.loginPage.validateLoginPage();
+        boolean isVisible = loginPage.validateLoginPage();
         assertTrue("The Login screen was not displayed correctly", isVisible);
     }
 

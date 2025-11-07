@@ -3,8 +3,6 @@ package com.saucedemo.pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-import io.qameta.allure.Step;
-
 public class LoginPage extends BasePage {
 
     // Locators con data-test (más estables que xpath)

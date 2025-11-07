@@ -15,14 +15,14 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 
 public class PlaywrightHooks {
-    private final TestContext testContext;
+    private final TestContext uiTestContext;
     private Playwright playwright;
     private Browser browser;
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(PlaywrightHooks.class);
 
     // Inyección de TestContext por Cucumber
     public PlaywrightHooks(TestContext context) {
-        this.testContext = context;
+        this.uiTestContext = context;
     }
 
     @Before
@@ -33,29 +33,29 @@ public class PlaywrightHooks {
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions()
                 .setHeadless(true)
                 .setSlowMo(100));
-        testContext.setContext(browser.newContext());
-        testContext.setPage(testContext.getContext().newPage());
+        uiTestContext.setBrowserContext(browser.newContext());
+        uiTestContext.setPage(uiTestContext.getBrowserContext().newPage());
 
-        testContext.getPage().navigate("https://www.saucedemo.com/");
+        uiTestContext.getPage().navigate("https://www.saucedemo.com/");
     }
 
     @After
     public void tearDownScenario(io.cucumber.java.Scenario scenario) throws Exception {
         logger.info("Tearing down Playwright after all scenarios: {}", scenario.getName());
-        if (scenario.isFailed() && testContext.getPage() != null) {
-            byte[] screenshot = testContext.getPage().screenshot(new Page.ScreenshotOptions().setFullPage(true));
+        if (scenario.isFailed() && uiTestContext.getPage() != null) {
+            byte[] screenshot = uiTestContext.getPage().screenshot(new Page.ScreenshotOptions().setFullPage(true));
             Allure.addAttachment("Screenshot on Failure", new ByteArrayInputStream(screenshot));
         }
 
         byte[] logFile = Files.readAllBytes(Paths.get("logs/test-execution.log"));
         attachLogFile(logFile);
 
-        if (testContext.getPage() != null) {
-            testContext.getPage().close();
+        if (uiTestContext.getPage() != null) {
+            uiTestContext.getPage().close();
         }
 
-        if (testContext.getContext() != null) {
-            testContext.getContext().close();
+        if (uiTestContext.getBrowserContext() != null) {
+            uiTestContext.getBrowserContext().close();
         }
 
         if (browser != null) {
