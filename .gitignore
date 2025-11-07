@@ -12,3 +12,4 @@ allure-results/
 *.war
 target/saucedemo-automation-1.0-SNAPSHOT.jar
 .DS_Store
+logs/*.log
