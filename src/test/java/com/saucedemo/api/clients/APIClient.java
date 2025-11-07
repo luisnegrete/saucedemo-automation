@@ -6,8 +6,10 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import java.util.Map;
 
+import com.saucedemo.utils.ConfigLoader;
+
 public class APIClient {
-    private static final String BASE_URL = "http://localhost:3000";
+    private static final String BASE_URL = ConfigLoader.getApiBaseUrl();
     private static String authToken;
 
     static {

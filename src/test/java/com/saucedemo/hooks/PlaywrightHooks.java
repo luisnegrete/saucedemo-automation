@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import org.slf4j.Logger;
 
 import com.microsoft.playwright.*;
+import com.saucedemo.utils.ConfigLoader;
 import com.saucedemo.utils.TestContext;
 
 import io.cucumber.java.After;
@@ -33,10 +34,11 @@ public class PlaywrightHooks {
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions()
                 .setHeadless(true)
                 .setSlowMo(100));
+                
         uiTestContext.setBrowserContext(browser.newContext());
         uiTestContext.setPage(uiTestContext.getBrowserContext().newPage());
 
-        uiTestContext.getPage().navigate("https://www.saucedemo.com/");
+        uiTestContext.getPage().navigate(ConfigLoader.getUiBaseUrl());
     }
 
     @After

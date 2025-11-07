@@ -1,154 +1,164 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <properties>
-    <cucumber.features>src/test/resources/features</cucumber.features>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-  </properties>
-  <groupId>com.saucedemo.test</groupId>
-  <artifactId>saucedemo-automation</artifactId>
-  <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>saucedemo-automation</name>
-  <url>http://maven.apache.org</url>
-  <dependencies>
-    <!-- Playwright for Java -->
-    <dependency>
-        <groupId>com.microsoft.playwright</groupId>
-        <artifactId>playwright</artifactId>
-        <version>1.48.0</version>
-    </dependency>
-    <!-- Cucumber for Java -->
-    <dependency>
-        <groupId>io.cucumber</groupId>
-        <artifactId>cucumber-java</artifactId>
-        <version>7.20.1</version>
-    </dependency>
-    <!-- Cucumber JUnit -->
-    <dependency>
-        <groupId>io.cucumber</groupId>
-        <artifactId>cucumber-junit</artifactId>
-        <version>7.20.1</version>
-        <scope>test</scope>
-    </dependency>
-    <!-- Assertions -->
-    <dependency>
-        <groupId>org.assertj</groupId>
-        <artifactId>assertj-core</artifactId>
-        <version>3.26.3</version>
-    </dependency>
-    
-    <!-- RestAssured for API Testing -->
-    <dependency>
-        <groupId>io.rest-assured</groupId>
-        <artifactId>rest-assured</artifactId>
-        <version>5.4.0</version>
-        <scope>test</scope>
-    </dependency>
-    
-    <!-- Jackson for JSON serialization -->
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.17.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <version>1.18.32</version>
-        <scope>compile</scope>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-cucumber7-jvm -->
-    <dependency>
-        <groupId>io.qameta.allure</groupId>
-        <artifactId>allure-cucumber7-jvm</artifactId>
-        <version>2.30.0</version>
-        <scope>test</scope>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer -->
-    <dependency>
-        <groupId>io.cucumber</groupId>
-        <artifactId>cucumber-picocontainer</artifactId>
-        <version>7.20.1</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-    <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>2.0.12</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
-    <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
-        <version>1.4.14</version>
-        <scope>compile</scope>
-    </dependency>
-</dependencies>
-<build>
-    <plugins>
-        <!-- Lombok Annotation Processing -->
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.13.0</version>
-            <configuration>
-                <annotationProcessorPaths>
-                    <path>
-                        <groupId>org.projectlombok</groupId>
-                        <artifactId>lombok</artifactId>
-                        <version>1.18.32</version>
-                    </path>
-                </annotationProcessorPaths>
-            </configuration>
-        </plugin>
-        <!-- Surefire plugin para ejecutar tests -->
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.3.0</version>
-            <configuration>
-                <testFailureIgnore>true</testFailureIgnore>
-                <includes>
-                    <include>**/RunCucumberTest.java</include>
-                </includes>
-                <systemPropertyVariables>
-                    <cucumber.features>${cucumber.features}</cucumber.features>
-                    <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
-                </systemPropertyVariables>
-                <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-            </configuration>
-    <executions>
-        <execution>
-            <id>first-run</id>
-            <phase>test</phase>
-            <goals>
-                <goal>test</goal>
-            </goals>
-        </execution>
-    </executions>
-</plugin>
+    <modelVersion>4.0.0</modelVersion>
+
+    <properties>
+        <cucumber.features>src/test/resources/features</cucumber.features>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <groupId>com.saucedemo.test</groupId>
+    <artifactId>saucedemo-automation</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>saucedemo-automation</name>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+        <!-- Playwright for Java -->
+        <dependency>
+            <groupId>com.microsoft.playwright</groupId>
+            <artifactId>playwright</artifactId>
+            <version>1.48.0</version>
+        </dependency>
+        <!-- Cucumber for Java -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>7.20.1</version>
+        </dependency>
+        <!-- Cucumber JUnit -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>7.20.1</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Assertions -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.26.3</version>
+        </dependency>
         
-        <!-- Allure Reporting -->
-        <plugin>
+        <!-- RestAssured for API Testing -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>5.4.0</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Jackson for JSON serialization -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.17.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-cucumber7-jvm -->
+        <dependency>
             <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-maven</artifactId>
-            <version>2.12.0</version>
-            <configuration>
-    <reportVersion>2.30.0</reportVersion>
-                <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
-            </configuration>
-        </plugin>
-    </plugins>
-</build>
-<profiles>
-    <profile>
-        <id>rerun</id>
-        <properties>
-            <cucumber.features>@target/rerun.txt</cucumber.features>
-            <cucumber.filter.tags>not @none</cucumber.filter.tags>
-        </properties>
-    </profile>
-</profiles>
+            <artifactId>allure-cucumber7-jvm</artifactId>
+            <version>2.30.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>7.20.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.12</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.4.14</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.github.cdimascio/dotenv-java -->
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Lombok Annotation Processing -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.32</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <!-- Surefire plugin para ejecutar tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <includes>
+                        <include>**/RunCucumberTest.java</include>
+                    </includes>
+                    <systemPropertyVariables>
+                        <cucumber.features>${cucumber.features}</cucumber.features>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>first-run</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Allure Reporting -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.12.0</version>
+                <configuration>
+                    <reportVersion>2.30.0</reportVersion>
+                    <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>rerun</id>
+            <properties>
+                <cucumber.features>@target/rerun.txt</cucumber.features>
+                <cucumber.filter.tags>not @none</cucumber.filter.tags>
+            </properties>
+        </profile>
+    </profiles>
 </project>
