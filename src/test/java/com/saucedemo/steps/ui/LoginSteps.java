@@ -33,7 +33,7 @@ public class LoginSteps {
     @Given("User is logged in with {string}, {string} credentials")
     public void logginAsCredentials(String username, String password) {
         logger.info("Logging in with username: {} and password: {}", username, password);
-        Allure.step("Logged in with {} and {} credentials: " + username + "/" + password);
+        Allure.step("Logged in with " + username + " and " + password + " credentials");
 
         this.loginPage.login(username, password);
     }
